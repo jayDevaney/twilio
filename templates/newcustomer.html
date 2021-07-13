@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="../static/style.css" />
+    <title>Create New Customer Contact</title>
+  </head>
+  <body>
+    <div class="container">
+      <img src="../static/twilio.png" alt="Twilio" class="logo" />
+      {% if message %}
+        <p class="message">{{ message | safe }}</p>
+      {% endif %}
+      <form action="http://127.0.0.1:5000/add" method="POST">
+        <div class="form-group">
+          <h3>Customer Name</h3>
+          <input
+            type="text"
+            name="customer"
+            placeholder="Name of Registered User"
+          />
+        </div>
+        <div class="form-group">
+          <h3>Phone Number</h3>
+          <input
+            type="text"
+            name="phone"
+            placeholder="Number of recipient"
+          />
+        </div>
+        <div class="form-group">
+          <h3>Preferred Language:</h3>
+          <select name="language">
+            <option value="">Select Language</option>
+            <option value="EN">English</option>
+            <option value="ES">Español</option>
+            <option value="CA">Catalán</option>
+            <option value="EU">Euskera</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <h3>Please select method of contact: </h3>
+          <input type="radio" name="method" value="1" checked /> SMS
+          <input type="radio" name="method" value="2" /> Voice/Phone
+          <input type="radio" name="method" value="3" /> Whatsapp
+          <input type="radio" name="method" value="4" /> Other
+        </div>        
+        <input type="submit" value="Create" class="btn" />
+      </form>
+    </div>
+  </body>
+</html>
