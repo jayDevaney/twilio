@@ -15,7 +15,7 @@ ENV = 'dev'
 
 if ENV == 'dev':
     app.debug = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:cerrogrande5@localhost/twilio'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
 else:
     app.debug = False
     app.config['SQLALCHEMY_DATABASE_URI'] = ''
@@ -69,8 +69,6 @@ def submit():
     comments = request.form['comments']
 
     # Find your Account SID and Auth Token at twilio.com/console
-    """account_sid = 'ACaae2858bb37a2ba78a38adad498f6989'
-    auth_token = '5a060ca152c4a8e85e16ba7ec24d0248'"""
     account_sid = os.environ['TWILIO_ACCOUNT_SID']
     auth_token = os.environ['TWILIO_AUTH_TOKEN']
     client = Client(account_sid, auth_token)
