@@ -5,9 +5,7 @@
 > The app provides a simple html form to add resgistered users with twilio validated numebers to a PostgreSQL database. nstances of inbound calls and messages are stored in PostgreSQL database.
 
 # Install dependencies
-pipenv shell
-pipenv install
-
+requirements.txt
 
 # Serve on localhost:5000
 python app_twilio.py
