@@ -4,18 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
     <link rel="stylesheet" href="../static/style.css" />
-    <title>Create New Customer Contact</title>
+    <title>Messaging</title>
   </head>
-  <body>
+  <body>   
+    
+  
     <div class="container">
-      <img src="../static/twilio.png" alt="Twilio" class="logo" />
+      <img src="../static/twilio.png" alt="Twilio" class="logo" />      
       {% if message %}
         <p class="message">{{ message | safe }}</p>
       {% endif %}
       <form action="http://127.0.0.1:5000/add" method="POST">
         <div class="form-group">
-          <h3>Customer Name</h3>
+          <h5>Customer Name</h5>
           <input
             type="text"
             name="customer"
@@ -23,7 +35,7 @@
           />
         </div>
         <div class="form-group">
-          <h3>Phone Number</h3>
+          <h5>Phone Number</h5>
           <input
             type="text"
             name="phone"
@@ -31,7 +43,7 @@
           />
         </div>
         <div class="form-group">
-          <h3>Preferred Language:</h3>
+          <h5>Preferred Language:</h5>
           <select name="language">
             <option value="">Select Language</option>
             <option value="EN">English</option>
@@ -41,7 +53,7 @@
           </select>
         </div>
         <div class="form-group">
-          <h3>Please select method of contact: </h3>
+          <h5>Please select method of contact: </h5>
           <input type="radio" name="method" value="1" checked /> SMS
           <input type="radio" name="method" value="2" /> Voice/Phone
           <input type="radio" name="method" value="3" /> Whatsapp

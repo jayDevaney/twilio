@@ -87,10 +87,10 @@ def submit():
                 body=comments,
                 from_='+12055126263',
                 to=phone,
-                status_callback='http://4773ce27c878.ngrok.io/MessageStatus'
+                status_callback='http://27ccb13a7c48.ngrok.io/MessageStatus'
             )
         print(message.sid)
-        return render_template('index.html', message=phone + '  ' + message.sid + '  ' + method)
+        return render_template('success.html', message=phone + '  ' + message.sid)
 
     if method == '2':
         
@@ -98,10 +98,10 @@ def submit():
             twiml='<Response><Say>' + comments + '</Say></Response>',
             to=phone,
             from_='+12055126263',
-            status_callback='http://4773ce27c878.ngrok.io/MessageStatus'
+            status_callback='http://27ccb13a7c48.ngrok.io/MessageStatus'
         )
         print(call.sid)
-        return render_template('index.html', message=phone + '  ' + call.sid + '  ' + method)
+        return render_template('success.html', message=phone + '  ' + call.sid + '  ' + method)
 
     if method == '4':
         
@@ -113,7 +113,7 @@ def submit():
                         body=comments,
                         from_='+12055126263',
                         to=user.phone,
-                        status_callback='http://4773ce27c878.ngrok.io/MessageStatus'
+                        status_callback='http://27ccb13a7c48.ngrok.io/MessageStatus'
                     )
                     
             if user.method == '2':            
@@ -121,7 +121,7 @@ def submit():
                     twiml='<Response><Say>' + comments + '</Say></Response>',
                     to=user.phone,
                     from_='+12055126263',
-                    status_callback='http://4773ce27c878.ngrok.io/MessageStatus'
+                    status_callback='http://27ccb13a7c48.ngrok.io/MessageStatus'
                 )
                 print(call.sid)
         return render_template('success.html')
@@ -130,7 +130,7 @@ def submit():
 @app.route("/answer", methods=['GET', 'POST'])
 def answer_call():
     """Respond to incoming phone calls with a brief message."""
-    # Start our TwiML response
+    # Start TwiML response
     resp = VoiceResponse()
     resp.say("Thank you for your interest in our products and services.", voice='alice')
 

@@ -11,7 +11,10 @@
     <div class="container">
       <img src="../static/twilio.png" alt="" class="logo" />
       <h1>Super!</h1>
-      <h2>Thank you for registering. You will be hearing from us soon!</h2>
-    </div>    
+      <h2>Thank you. You will be hearing from us soon!</h2>
+    </div> 
+    {% if message %}
+      <p class="message">{{ message | safe }}</p>
+    {% endif %}   
   </body>
 </html>
