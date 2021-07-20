@@ -2,9 +2,10 @@ from flask import Flask, request, redirect, render_template
 from flask_sqlalchemy import SQLAlchemy
 from twilio.twiml.voice_response import VoiceResponse
 from twilio.twiml.messaging_response import MessagingResponse
+from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
 from datetime import datetime
 import os
-from twilio.rest import Client
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -62,7 +63,6 @@ def new():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-
     phone = request.form['phone']
     campaign = request.form['campaign']
     method = request.form['method']
@@ -74,34 +74,48 @@ def submit():
     client = Client(account_sid, auth_token)
 
     """ TODO: Error Handler """
+    
     if len(phone) > 0:
-        phone_number = client.lookups \
-            .v1 \
-            .phone_numbers(phone) \
-            .fetch(country_code='ES')
-
-    if method == '1':
+        try:
+            phone_number = client.lookups \
+                .v1 \
+                .phone_numbers(phone) \
+                .fetch(country_code='ES')
+        except TwilioRestException as e:            
+            return render_template('index.html', message= 'Not a Spanish number:  ' + e.msg)
+        else:
+            pass
+    else:
+        return render_template('index.html', message= 'Please enter a valid number:  ')
         
-        message = client.messages \
-            .create(
-                body=comments,
-                from_='+12055126263',
-                to=phone,
-                status_callback='http://27ccb13a7c48.ngrok.io/MessageStatus'
-            )
-        print(message.sid)
-        return render_template('success.html', message=phone + '  ' + message.sid)
+    if method == '1':
+        try:
+            message = client.messages \
+                .create(
+                    body=comments,
+                    from_='+12055126263',
+                    to=phone,
+                    status_callback='http://27ccb13a7c48.ngrok.io/MessageStatus'
+                )
+        except TwilioRestException as e:            
+            return render_template('index.html', message= 'Error:  ' + e.msg) 
+        else:
+            print(message.sid)
+            return render_template('success.html', message=phone + '  ' + message.sid)
 
     if method == '2':
-        
-        call = client.calls.create(
-            twiml='<Response><Say>' + comments + '</Say></Response>',
-            to=phone,
-            from_='+12055126263',
-            status_callback='http://27ccb13a7c48.ngrok.io/MessageStatus'
-        )
-        print(call.sid)
-        return render_template('success.html', message=phone + '  ' + call.sid + '  ' + method)
+        try:
+            call = client.calls.create(
+                twiml='<Response><Say>' + comments + '</Say></Response>',
+                to=phone,
+                from_='+12055126263',
+                status_callback='http://27ccb13a7c48.ngrok.io/MessageStatus'
+            )
+            print(call.sid)
+        except TwilioRestException as e:            
+            return render_template('index.html', message= 'Error:  ' + e.msg) 
+        else:
+            return render_template('success.html', message=phone + '  ' + call.sid + '  ' + method)
 
     if method == '4':
         

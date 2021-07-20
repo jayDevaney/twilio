@@ -86,5 +86,12 @@
       </form>
     </div>
     </section>
+    <section>
+      <div>
+        {% if message %}
+        <p class="message">{{ message | safe }}</p>
+        {% endif %}  
+      </div>
+    </section>
   </body>
 </html>
